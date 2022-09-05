@@ -30,9 +30,9 @@ void draw(){  //每一秒畫60次
 }
 ```
 ## ◇設定到網頁上使用:
-  1.右上角java 下拉按Manage Modes.... 下載p5.js安裝，並點選。
-  2.到 https://pde2js.herokuapp.com/ 轉換程式碼。
-  ☆如果存檔後，無法執行到網頁上，可以選p5.js  -> Re-create  index.html  重寫，因為index.html讀檔錯誤☆
+1.右上角java 下拉按Manage Modes.... 下載p5.js安裝，並點選。
+2.到 https://pde2js.herokuapp.com/ 轉換程式碼。
+☆如果存檔後，無法執行到網頁上，可以選p5.js  -> Re-create  index.html  重寫，因為index.html讀檔錯誤☆
 ## ◇小畫家:
  1. mousePressed 感測按下滑鼠時、keyPressed 是感測鍵盤。
  2. line( ); 是畫線。
