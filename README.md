@@ -98,12 +98,20 @@ void keyPressed(){
   2. String flower   設定放花色的陣列。
   3. String face1 .....;   設定每張牌的變數。
   4. face1  是來放亂數取好後放入的變數。
+  5.可以再新增一個void mousePressed(){}就可以按一下就洗牌。
 ```
 ```c
 void setup(){
  size(500,500);
  PFont font = createFont("標楷體",40); ///設定一個字形變數，並建立一個標楷體
  textFont(font);//將字形套用
+ String [] flower={"黑桃","紅心","梅花","方塊"};
+ face1=flower[int(random(4))] + int(random(13)+1);//random出來是float，所以要強制轉換成int，因為會出現0所以要加1。
+ face2=flower[int(random(4))] + int(random(13)+1);
+ face3=flower[int(random(4))] + int(random(13)+1);
+ face4=flower[int(random(4))] + int(random(13)+1);
+}
+void mousePressed(){
  String [] flower={"黑桃","紅心","梅花","方塊"};
  face1=flower[int(random(4))] + int(random(13)+1);//random出來是float，所以要強制轉換成int，因為會出現0所以要加1。
  face2=flower[int(random(4))] + int(random(13)+1);
@@ -128,13 +136,6 @@ void drawPokerCard(int x, int y, String face){
   textSize(20);
   text(face ,x+3 ,y+20);
 }
-```
-## ◇:
-```
- 
-```
-```c
-
 ```
 
 
