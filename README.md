@@ -73,15 +73,23 @@ void keyPressed(){
 
 ## ◇Poker製作:
 ```
-  1. textSize( 大小 );     設定字體大小。
-  2. text( 文字 , 位置x , 位置 y );     設定文字 和 文字擺放位置。
-  3.在 drawPokerCard()    設定一個 字串(String)  face。
-  4. PFont  font     建立一個字形的變數。(PFont是變數名稱)
-  5. createFont( " 字體 " , 大小 );    設定內建的一個字型。
-    另一種讀字體檔的方法loadFont("字體檔案"); 
-  6. textFont(" 字體變數 ");    套用字型。
-  7. 變數 . indexOf(" 字 ")    可以測變數裡面有沒有這個字。
-     變數.indexOf( "  字 ") == -1    表示變數裡沒有這個字。
+  1. textSize( 大小 );     
+     設定字體大小。
+  2. text( 文字 , 位置x , 位置 y );     
+     設定文字 和 文字擺放位置。
+  3. 在 drawPokerCard()
+     設定一個 字串(String)  face。
+  4. PFont  font     
+     建立一個字形的變數。(PFont是變數名稱)
+  5. createFont( " 字體 " , 大小 );    
+     設定內建的一個字型。
+     另一種讀字體檔的方法loadFont("字體檔案"); 
+  6. textFont(" 字體變數 ");    
+     套用字型。
+  7. 變數 . indexOf(" 字 ")    
+     可以測變數裡面有沒有這個字。
+     變數.indexOf( "  字 ") == -1    
+     表示變數裡沒有這個字。
 ```
 ```c
 
