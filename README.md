@@ -140,30 +140,204 @@ void drawPokerCard(int x, int y, String face){
 
 
 # 第三週
-## ◇:
+## ◇Poker - 按一下洗牌 (接續上次程式):
 ```
-
-```
-```c
-
-```
-## ◇:
-```
-
+  1. 創造void myShuffle(); 和 void mousePressed(); 函式，並把洗牌的程式碼放進myShuffle();。
+  2.void setup 和 void mousePressed 裡要呼叫 myShuffle();
 ```
 ```c
-
+void setup(){
+ size(500,500);
+ PFont font = createFont("標楷體",40); ///設定一個字形變數，並建立一個標楷體
+ textFont(font);//將字形套用
+ myShuffle();
+}
+void myShuffle(){
+ String [] flower={"黑桃","紅心","梅花","方塊"};
+ face1=flower[int(random(4))] + int(random(13)+1);//random出來是float，所以要強制轉換成int，因為會出現0所以要加1。
+ face2=flower[int(random(4))] + int(random(13)+1);
+ face3=flower[int(random(4))] + int(random(13)+1);
+ face4=flower[int(random(4))] + int(random(13)+1);
+}
+void mousePressed(){
+ myShuffle();
+}
+String face1,face2,face3,face4;
+void draw(){
+  drawPokerCard(100,100,face1);
+  drawPokerCard(130,130,face2);
+  drawPokerCard(160,160,face3);
+  drawPokerCard(190,190,face4);
+}
+void drawPokerCard(int x, int y, String face){
+  int a=20;
+  fill(#FFF7E8);//大，米色
+  rect( x-a/2, y-a/2, 120+a, 220+a, 10);
+  fill( #FC4242);//小，紅色
+  rect( x, y, 120, 220, 10);
+  if( face.indexOf("黑桃") == -1 && face.indexOf("梅花") == -1) fill(#FF0000);
+  else fill(0);
+  textSize(20);
+  text(face ,x+3 ,y+20);
+}
 ```
-## ◇:
+## ◇ Poker:
 ```
-
+ 1. 設定大一點的視窗  size(700,700); 和 背景顏色 (background)
+ 2.在draw裡，創造52張牌的for迴圈。
+     設定變數x,y取間隔，(i/10)除10是為了一排可以放10張牌。i/10會有小數，所以在前面加int強制轉成整數。
+ 3.在setup 設定好字形，為了可以印出中文
+      PFont font = createFont("標楷體",15 ); //創造字形。
+      textFont(font); //設定字形為font。
+ 4.建立花色的陣列。 可以用noteped++ 按搜尋→取代 ( ctrl + H )快速取代字。
+ 5.在for迴圈 運用 text 指令印出花色。
+ 6.將畫面設大size(800,600)，並i改為除13，一排放13張牌。
+ 7.用if -else 改變顏色， 並用到 indexOf( )找裡面的字，使紅心和方塊為紅色。
 ```
 ```c
-
+void setup(){
+ size(800,600); 
+ background( #E5FFF1 );
+ PFont font = createFont("標楷體",15 );  ///創造字形
+ textFont(font);  //設定字形為font
+}
+String [] face ={"黑桃A" ,"黑桃2","黑桃3","黑桃4","黑桃5","黑桃6","黑桃7","黑桃8","黑桃9","黑桃10","黑桃J","黑桃Q","黑桃K",
+          "梅花A" ,"梅花2","梅花3","梅花4","梅花5","梅花6","梅花7","梅花8","梅花9","梅花10","梅花J","梅花Q","梅花K",
+          "方塊A" ,"方塊2","方塊3","方塊4","方塊5","方塊6","方塊7","方塊8","方塊9","方塊10","方塊J","方塊Q","方塊K",
+          "紅心A" ,"紅心2","紅心3","紅心4","紅心5","紅心6","紅心7","紅心8","紅心9","紅心10","紅心J","紅心Q","紅心K"};  //設定花色陣列，記得後面要分號。
+void draw(){
+  for(int i=0 ;i<52 ; i++){
+     int x= (i%13)*60;
+     int y= int(i/13)*120;
+     fill(255);  rect(x,y,60,120);
+     if( face[i].indexOf("紅心")==-1 && face[i].indexOf("方塊")==-1 ) fill(#4675FF);
+     else fill(255,0,0);
+     text( face[i],x+15,y+80); //印出字形
+  }
+}
 ```
+## ◇Poker洗牌 (上面的接續) :
+```
+1. 新增一個mousePressed() 函式。
+2.設定變數 a,b 並取0~52亂數。
+   int a = int(random(52)); 
+   int b = int(random(52));
+3.利用temp做交換。 記得temp 是字串要用String，我們要交換字。
+   String temp = face[a];  
+   face[a]=face[b];
+   face[b]=temp;
+4.將mousePressed() 改成 mouseDragged() 。使用滑鼠滾輪。
+```
+```c
+void setup(){
+ size(800,600); 
+ background( #E5FFF1 );
+ PFont font = createFont("標楷體",15 );  ///創造字形
+ textFont(font);  //設定字形為font
+}
+String [] face ={"黑桃A" ,"黑桃2","黑桃3","黑桃4","黑桃5","黑桃6","黑桃7","黑桃8","黑桃9","黑桃10","黑桃J","黑桃Q","黑桃K",
+          "梅花A" ,"梅花2","梅花3","梅花4","梅花5","梅花6","梅花7","梅花8","梅花9","梅花10","梅花J","梅花Q","梅花K",
+          "方塊A" ,"方塊2","方塊3","方塊4","方塊5","方塊6","方塊7","方塊8","方塊9","方塊10","方塊J","方塊Q","方塊K",
+          "紅心A" ,"紅心2","紅心3","紅心4","紅心5","紅心6","紅心7","紅心8","紅心9","紅心10","紅心J","紅心Q","紅心K"};  //設定花色陣列，記得後面要分號。
+void draw(){
+  for(int i=0 ;i<52 ; i++){
+     int x= (i%13)*60;
+     int y= int(i/13)*120;
+     fill(255);  rect(x,y,60,120);
+     if( face[i].indexOf("紅心")==-1 && face[i].indexOf("方塊")==-1 ) fill(#4675FF);
+     else fill(255,0,0);
+     text( face[i],x+15,y+80); //印出字形
+  }
+}
+void mouseDragged(){  //用滑鼠滾輪
+   int a = int(random(52)); 
+   int b = int(random(52));
+   String temp = face[a];
+   face[a]=face[b];
+   face[b]=temp;
+}
+```
+## ◇Poker洗牌與上禮拜程式合成 :
+```
+1.將上面的花色陣列複製過去上禮拜的。
+2.在 myShuffle() 設定迴圈 讓他自動多洗，並將Poker洗牌的程式塞進去。
+  for( int k=0 ; k<10000 ; k++){  //讓他洗10000次
+    int a = int(random(52)); 
+    int b = int(random(52));
+    String temp = face[a];
+    face[a]=face[b];
+    face[b]=temp; 
+ }
+3.洗好排後，設定好4張牌的face。
+ face1 = face[0];
+ face2 = face[1]; 
+ face3 = face[2]; 
+ face4 = face[3]; 
+```
+```c
+void setup(){
+ size(500,500);
+ PFont font = createFont("標楷體",40); ///設定一個字形變數，並建立一個標楷體
+ textFont(font);//將字形套用
+ myShuffle();
+}
+String [] face ={"黑桃A" ,"黑桃2","黑桃3","黑桃4","黑桃5","黑桃6","黑桃7","黑桃8","黑桃9","黑桃10","黑桃J","黑桃Q","黑桃K",
+          "梅花A" ,"梅花2","梅花3","梅花4","梅花5","梅花6","梅花7","梅花8","梅花9","梅花10","梅花J","梅花Q","梅花K",
+          "方塊A" ,"方塊2","方塊3","方塊4","方塊5","方塊6","方塊7","方塊8","方塊9","方塊10","方塊J","方塊Q","方塊K",
+          "紅心A" ,"紅心2","紅心3","紅心4","紅心5","紅心6","紅心7","紅心8","紅心9","紅心10","紅心J","紅心Q","紅心K"};  //設定花色陣列，記得後面要分號。
+void myShuffle(){
+ for( int k=0 ; k<10000 ; k++){
+   int a = int(random(52)); 
+   int b = int(random(52));
+   String temp = face[a];
+   face[a]=face[b];
+   face[b]=temp; 
+ }
+ face1 = face[0];
+ face2 = face[1]; 
+ face3 = face[2]; 
+ face4 = face[3]; 
+}
+void mousePressed(){
+ myShuffle();
+}
+String face1,face2,face3,face4;
+void draw(){
+  drawPokerCard(100,100,face1);
+  drawPokerCard(130,130,face2);
+  drawPokerCard(160,160,face3);
+  drawPokerCard(190,190,face4);
+}
+void drawPokerCard(int x, int y, String face){
+  int a=20;
+  fill(#FFF7E8);//大，米色
+  rect( x-a/2, y-a/2, 120+a, 220+a, 10);
+  fill( #FC4242);//小，紅色
+  rect( x, y, 120, 220, 10);
+  if( face.indexOf("黑桃") == -1 && face.indexOf("梅花") == -1) fill(#FF0000);
+  else fill(0);
+  textSize(20);
+  text(face ,x+3 ,y+20);
+}
+```
+
 
 # 第四週
-## ◇:
+## ◇ :
 ```
+
+```
+```c
+
+```
+
+
+
+# 第五週
+## ◇ :
+```
+
+```
+```c
 
 ```
