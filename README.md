@@ -323,6 +323,102 @@ void drawPokerCard(int x, int y, String face){
 
 
 # 第四週
+## ◇彈力球:
+```
+  1. 設好畫面大小，及x,y變數。 //x,y 設為float可以更精細
+  2. ellipse( x , y , 寬 , 長);    //畫出橢圓，
+     並讓x,y移植慢慢增加。
+  3.多設兩個變數 vx ,vy (要用float)、 x,y也要改成float
+  4.並設定if-else ，當x超過畫面就換方向 且 y超過上面就會反彈。
+  5.在void draw 設定 background 使他每次執行都會蓋過上一個球。
+  6. 用rect 設定板子 ， 並設定int boardx= mouseX; ，rect( mouseX , 470 , 寬 , 長 , 弧度); //使方塊能跟滑鼠一起動。
+  7.設定球碰到板子反彈，到板子的y位置和 x~x+100的位置就會反彈。
+  8.將boardx改為 mouseX- boardW/2 這樣就會在板子中間控制。
+  9.利用(mouseX - pmouseX)/2 算出滑鼠的移動量，並加到vx。
+  10.設定當按下右鍵/左鍵 板子會放大縮小(運用mousePressed  和 mouseButton)。
+```
+```c
+void setup(){
+ size(500,500);
+}
+float x=250,y=250;
+float vx=2.0,vy=-1.5;
+float boardx,boardy=470,boardW=100,boardH=15;
+void draw(){
+ background(#FFEAD1);
+ boardx=mouseX- boardW/2; //使滑鼠
+ rect( boardx ,boardy,boardW,boardH,5);
+ ellipse(x ,y ,10, 10); //橢圓
+ x=x+vx;
+ y=y+vy;
+ if(x >500 || x<0 ) vx=-vx;
+ if(y < 0 ) vy=-vy;
+ if( ( y>boardy && y<boardy+30 ) && ( x>boardx && x<boardx+boardW)) {
+   ///當球到470的位置而且要在邊框內，並且在板子X~ X+100內就反彈。
+   vy=-vy;
+   vx += (mouseX- pmouseX)/2; //加上滑鼠的移動數度
+ }
+ if(mousePressed && mouseButton==LEFT) boardW *= 1.01; ///按並是左鍵
+ if(mousePressed && mouseButton==RIGHT) boardW *= 0.99;///按並是右鍵
+}
+```
+## ◇ 圍棋:
+```
+  1. 設定好視窗大小，並建立９＊９陣列 (裡面暫時都放0)。
+  2.在draw裡面利用雙迴圈，去偵測陣列裡面的值。
+  3. 用if -else判斷，如果值為1就填充黑色，為0為白色。
+  4.利用雙層迴圈畫線條， 利用line( x1 , y1, x2, y2); 。
+  5.將偵測棋子的if-else指令修改，當為1時，下黑棋，為2時，下白旗。
+    當兩個都不是就不下棋。
+  6.設一個mousePressed() 。 
+  7.設定 int j = (mouseX-25)/50;    為了辨識我們在哪個位置
+         int i = (mouseY-25)/50;
+  8.切換黑白棋，先設定int N=0 利用go[i][j]=(N%2==0) ? 1: 2; // 如果(N%2==0) 用1，否則2，並放進陣列那個位置。再去判別現在要黑還白，之後N++。
+```
+```c
+void setup(){
+ size(500,500); 
+}
+int [][] go={
+  {0,0,0,0,0,0,0,0,0}, 
+  {0,0,0,0,0,0,0,0,0}, 
+  {0,0,0,0,0,0,0,0,0}, 
+  {0,0,0,0,0,0,0,0,0}, 
+  {0,0,0,0,0,0,0,0,0}, 
+  {0,0,0,0,0,0,0,0,0}, 
+  {0,0,0,0,0,0,0,0,0}, 
+  {0,0,0,0,0,0,0,0,0}, 
+  {0,0,0,0,0,0,0,0,0}, 
+};///建立9*9的陣列
+int N=0;
+void mousePressed(){
+   int j = (mouseX-25)/50;//因為前面我們空了50，我們取一半(為了偵測位置)，除50就會知道現在是第幾格
+   int i = (mouseY-25)/50;
+   go[i][j]=(N%2==0) ? 1: 2; // 如果(N%2==0) 用1，否則2
+   N++;
+}
+void draw(){
+   background(#EABB74);
+   for(int i=1;i<=9;i++){
+     for(int j=1;j<=9;j++){
+       line( 50 , 50*i , 450 , 50*i);//橫線
+       line(50*i,   50 , 50*i, 450 );//直線
+     }
+   }
+   for(int i=0 ; i<9 ; i++){
+     for( int j=0 ; j<9 ; j++){
+       if(go[i][j]==1){
+         fill(0);//當讀到1時畫黑棋
+         ellipse( 50+j*50 , 50+i*50 , 50, 50); 
+       }
+       else if(go[i][j]==2){
+         fill(255);
+         ellipse( 50+j*50 , 50+i*50 , 50, 50);
+       }///除了1,2以外的值都不畫。
+     }
+   }
+}
+```
 ## ◇ :
 ```
 
