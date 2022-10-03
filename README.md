@@ -419,17 +419,252 @@ void draw(){
    }
 }
 ```
-## ◇ :
-```
-
-```
-```c
-
-```
-
 
 
 # 第五週
+## ◇象棋:
+```
+  1. 先用迴圈畫棋盤線。
+  2. 將橫線分半，製造出楚河漢界。(上排從50~250，下排300~500)
+  3.建立象棋陣列(board)，把棋子編號。(ex: 1:將 2:士.....。記得要放在globe的區域)
+  4.利用雙迴圈印出陣列象棋位置。(利用text做，記得text 左邊為y-直的,右邊為x-橫的)  
+  5.在設定一個陣列String []name={"將","士","象","馬","車","包","卒"};為了能印出來中文
+  6.  設定id 為board陣列，當id為0時我們需要跳過他(因為不印東西)
+  7.將text的地方，改成name[id-1]。(減一是因為要確保兩個陣列數一樣，不然會出錯)
+  8.之後再set地方設定字型(用PFont、createFont、textFont、textAlign)。
+    因為原本的字型是設定在左下角，所以我們要用textAlign(centet,center);改為中間。
+```
+```c
+void setup() {
+  size(500, 700);
+  PFont font = createFont("標楷體",30);//設定文字
+  textFont(font);
+  textAlign(CENTER,CENTER);
+}
+int [][]board={
+  {4, 5, 3, 2, 1, 2, 3, 5, 4},
+  {0, 0, 0, 0, 0, 0, 0, 0, 0},
+  {0, 6, 0, 0, 0, 0, 0, 6, 0},
+  {7, 0, 7, 0, 7, 0, 7, 0, 7},
+  {0, 0, 0, 0, 0, 0, 0, 0, 0},
+};//將象棋個棋編碼
+String []name={"將","士","象","馬","車","包","卒"};
+void draw() {
+  for (int x=50; x<=450; x+=50) {
+    line( x, 50, x, 250);//上排(為了楚河漢界)
+    line( x, 300, x, 500);//下排
+  }
+  for (int y=50; y<=500; y+=50) {
+    line( 50, y, 450, y); //line(x1,y1,x2,y2);
+  }
+  for (int i=0; i<5; i++) {///印出象棋
+    for (int j=0; j<9; j++) {
+      int id= board[i][j];///設定id能對照數字，之後中文name陣列就可以讀取。
+      if (id==0) continue;///因為陣列數不相同，我們必須扣掉0，不印的地方
+      text( name[id-1], 50+j*50, 50+i*50);//左邊y,右邊x
+    }
+  }
+}
+```
+
+## ◇ 象棋棋子:
+```
+  1. 利用ellipse() 畫出圓形，因為字體會不在圓圈中間，所以text的y需要做修正(減3)。
+  2. 將board陣列新增例外一半棋，並且另外一半棋子的編號為負!!
+  3.再設定一個String 放入紅棋個中文。String []name2={"帥", "仕", "相","俥" ,"傌", "炮", "兵"};。
+  4.設定if-else，當id大於0時，設定為白底黑字。
+                當id小於0時，設定為白底紅字。
+```
+```c
+void setup() {
+  size(500, 700);
+  PFont font = createFont("標楷體", 30);//設定文字
+  textFont(font);
+  textAlign(CENTER, CENTER);
+}
+int [][]board={
+  {4, 5, 3, 2, 1, 2, 3, 5, 4},
+  {0, 0, 0, 0, 0, 0, 0, 0, 0},
+  {0, 6, 0, 0, 0, 0, 0, 6, 0},
+  {7, 0, 7, 0, 7, 0, 7, 0, 7},
+  {0, 0, 0, 0, 0, 0, 0, 0, 0},
+  {0, 0, 0, 0, 0, 0, 0, 0, 0},
+  {-7, 0, -7, 0, -7, 0, -7, 0, -7},
+  {0, -6, 0, 0, 0, 0, 0, -6, 0},
+  {0, 0, 0, 0, 0, 0, 0, 0, 0},
+  {-4, -5, -3, -2, -1, -2, -3, -5, -4},
+};//將象棋個棋編碼
+String []name={"將", "士", "象", "車", "馬", "包", "卒"};
+String []name2={"帥", "仕", "相","俥" ,"傌", "炮", "兵"};
+void draw() {
+  background(#FFDAA2);
+  for (int x=50; x<=450; x+=50) {
+    line( x, 50, x, 250);//上排(為了楚河漢界)
+    line( x, 300, x, 500);//下排
+  }
+  for (int y=50; y<=500; y+=50) {
+    line( 50, y, 450, y); //line(x1,y1,x2,y2);
+  }
+  for (int i=0; i<10; i++) {///印出象棋
+    for (int j=0; j<9; j++) {
+      int id= board[i][j];///設定id能對照數字，之後中文name陣列就可以讀取。
+      if (id==0) continue;///因為陣列數不相同，我們必須扣掉0，不印的地方
+      if (id>0) {
+        fill(255);
+        ellipse(50+j*50, 50+i*50, 40, 40);
+        fill(0);
+        text( name[id-1], 50+j*50, 50+i*50-3);//左邊y,右邊x
+      }
+      if (id<0) {
+        fill(255);
+        ellipse(50+j*50, 50+i*50, 40, 40);
+        fill(255, 0, 0);
+        text( name2[-id-1], 50+j*50, 50+i*50-3);//左邊y,右邊x
+      }
+    }
+  }
+}
+```
+
+## ◇ 滑鼠控制棋子:
+```
+  1. 設定一個void mousePressed()
+  2. 用雙迴圈的方式來找棋盤對應格子，再設定
+     if ( dist(mouseX,mouseY,50+j*50, 50+i*50)<20 ) //當滑鼠到那個圓圈的位置時。
+    (可用dist來測量位置!!)
+ ///上面拿棋，下面放棋
+  3.設定void mouseReleased() (放開的指令)，再設定一個int hand=0。
+  4.並設定位置int i= (mouseY+25-50)/50;//Y是50+j*50。去做換算
+             int j= (mouseX+25-50)/50;//X是50+j*50。
+    且設定好放棋子board[i][j]=hand;//放棋
+                 hand=0; ///清空手
+  5.修改mousePressed()裡的程式。
+       hand=board[i][j];///拿棋
+       board[i][j]=0; ///清空那格棋
+  6.顯示手上的棋子。if(hand!=0) ellipse(mouseX,mouseY,40,40); (放draw裡的雙迴圈)
+```
+```c
+void setup() {
+  size(500, 700);
+  PFont font = createFont("標楷體", 30);//設定文字
+  textFont(font);
+  textAlign(CENTER, CENTER);
+}
+int [][]board={
+  {4, 5, 3, 2, 1, 2, 3, 5, 4},
+  {0, 0, 0, 0, 0, 0, 0, 0, 0},
+  {0, 6, 0, 0, 0, 0, 0, 6, 0},
+  {7, 0, 7, 0, 7, 0, 7, 0, 7},
+  {0, 0, 0, 0, 0, 0, 0, 0, 0},
+  {0, 0, 0, 0, 0, 0, 0, 0, 0},
+  {-7, 0, -7, 0, -7, 0, -7, 0, -7},
+  {0, -6, 0, 0, 0, 0, 0, -6, 0},
+  {0, 0, 0, 0, 0, 0, 0, 0, 0},
+  {-4, -5, -3, -2, -1, -2, -3, -5, -4},
+};//將象棋個棋編碼
+String []name={"將", "士", "象", "車", "馬", "包", "卒"};
+String []name2={"帥", "仕", "相","俥" ,"傌", "炮", "兵"};
+void draw() {
+  background(#FFDAA2);
+  for (int x=50; x<=450; x+=50) {
+    line( x, 50, x, 250);//上排(為了楚河漢界)
+    line( x, 300, x, 500);//下排
+  }
+  for (int y=50; y<=500; y+=50) {
+    line( 50, y, 450, y); //line(x1,y1,x2,y2);
+  }
+  for (int i=0; i<10; i++) {///印出象棋
+    for (int j=0; j<9; j++) {
+      int id= board[i][j];///設定id能對照數字，之後中文name陣列就可以讀取。
+      if (id==0) continue;///因為陣列數不相同，我們必須扣掉0，不印的地方
+      if (id>0) {
+        fill(255);
+        ellipse(50+j*50, 50+i*50, 40, 40);
+        fill(0);
+        text( name[id-1], 50+j*50, 50+i*50-3);//左邊y,右邊x
+      }
+      if (id<0) {
+        fill(255);
+        ellipse(50+j*50, 50+i*50, 40, 40);
+        fill(255, 0, 0);
+        text( name2[-id-1], 50+j*50, 50+i*50-3);//左邊y,右邊x
+      }
+      if(hand!=0) ellipse(mouseX,mouseY,40,40);
+    }
+  }
+  
+}
+int hand=0;
+void mousePressed(){
+  for (int i=0; i<10; i++) {
+    for (int j=0; j<9; j++) {
+       if(dist(mouseX,mouseY,50+j*50, 50+i*50)<20){
+           hand=board[i][j];///拿棋
+           board[i][j]=0; ///清空那格棋
+       }
+    }
+  }
+}
+void mouseReleased(){
+   int i= (mouseY+25-50)/50;//Y是50+j*50。去做換算
+   int j= (mouseX+25-50)/50;//X是50+j*50。
+   board[i][j]=hand;//放棋
+   hand=0; ///清空手
+}
+```
+
+## ◇暗棋:
+```
+利用上面的程式進行修改
+  1.將board程式修改成4*8的大小，並修改裡面的值
+  2. void setup裡的設定整個搬過來，將size修改成(500,400)。String name也要複製過來
+  3.設立一個drawChess函式，修改原本的黑紅棋。
+```
+```c
+int [][]board={
+  {1, 2, 2, 3, 3, 4, 4, 5},
+  {5, 6, 6, 7, 7, 7, 7, 7},
+  {-1, -2, -2, -3, -3, -4, -4, -5},
+  {-5, -6, -6, -7, -7, -7, -7, -7}
+};
+void setup() {
+  size(500, 400);
+  PFont font = createFont("標楷體", 30);//設定文字
+  textFont(font);
+  textAlign(CENTER, CENTER);
+}
+void draw()
+{
+  background(#FFDAA2);
+  for (int x=50; x<=450; x+=50) {
+    line( x, 50, x, 250);//上排(為了楚河漢界)
+  }
+  for (int y=50; y<=250; y+=50) {
+    line( 50, y, 450, y); //line(x1,y1,x2,y2);
+  }
+  for (int i=0; i<4; i++) {///印出象棋
+    for (int j=0; j<8; j++) {
+      int id= board[i][j];
+      drawChess(50+25+j*50, 50+25+i*50, id);
+    }
+  }
+}
+String []name={"將", "士", "象", "車", "馬", "包", "卒"};
+String []name2={"帥", "仕", "相", "俥", "傌", "炮", "兵"};
+void drawChess(int x, int y, int id ) {
+  fill(255);
+  ellipse(x, y, 40, 40);
+  if (id>0) {
+    fill(0);
+    text(name[id-1], x, y-3);
+  } else {
+    fill(255, 0, 0);
+    text(name2[-id-1], x, y-3);
+  }
+}
+```
+
+# 第六週
 ## ◇ :
 ```
 
@@ -437,3 +672,11 @@ void draw(){
 ```c
 
 ```
+## ◇ :
+```
+
+```
+```c
+
+```
+
