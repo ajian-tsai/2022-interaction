@@ -798,23 +798,53 @@ void drawChess(int x, int y, int id ) {
   }
 }
 ```
-## ◇ :
+## ◇加入音樂 :
 ```
-
-```
-```c
-
-```
-## ◇ :
-```
-
+1.先存檔，將音樂檔拉入， ctrl+k可以打開程式目錄。 裡面的data資料夾可以看到我們丟進去的音樂。
+  查看音樂程式碼：協助 >點參考文件 > 點library >sound  
+2.進 程式素描本 > 使用程式函式庫 > Manage libraries > 安裝sound的函式庫
+3.讀入音樂檔：SoundFile File = new SoundFile(this,"檔名.mp3");
+  撥放音樂檔：File.play();
+4.可以在一開始先設立 SoundFile 變數，並一次讀取完，之後再撥放。
 ```
 ```c
-
+///先存檔，將音樂檔拉入， ctrl+k可以打開程式目錄。
+import processing.sound.*;
+SoundFile File,File2,File3;
+void setup(){
+  File = new SoundFile(this,"Intro Song_Final.mp3"); //都先讀取檔案
+  File2 = new SoundFile(this,"Bomb Explode.mp3");
+  File3 = new SoundFile(this,"Fruit Missed.mp3");
+  File.play();
+}
+void draw(){
+  
+}
+void mousePressed(){
+  File2.play();
+}
+void keyPressed(){
+  File3.play();
+}
 ```
-
-
 # 第八週
+## ◇ :
+```
+
+```
+```c
+
+```
+## ◇ :
+```
+
+```
+```c
+
+```
+
+
+# 第十週
 ## ◇ :
 ```
 
