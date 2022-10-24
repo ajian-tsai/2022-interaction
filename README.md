@@ -828,20 +828,64 @@ void keyPressed(){
 }
 ```
 # 第八週
-## ◇ :
+## ◇聲音播放:
+```
+1.先SoundFile  sound1,sound2;設定變數。
+2.讀取音檔 sound1=new SoundFile(this,"xxx.mp3");
+3.撥放音樂sound1.play();
+4.設定變數int stage切換場景。
+5.利用mousePressed + if-else，設定切換場景和停止與撥放音樂
+  暫停音樂sound1.stop();
+6.draw的時候去設定兩個舞台，在舞台上寫上stage狀態：
+  text( "stage 1",100,100); //在畫面上100,100的地方印出stage 1
+  並在setup的地方設定字型大小和顏色:
+  textSize(50);//設定字型size
+  fill(255,0,0);///字型顏色
+```
+```c
+void setup()
+{
+  size(400,300);
+}
+float fruitX=200,fruitY=150;//水果位置位置
+float fruitVX=1,fruitVY=-1;//加速度
+boolean flying=true;//控制現在使否往上飛
+void draw(){
+  background(#FFF798);
+  ellipse(fruitX,fruitY,50,50);//畫圓
+  if(flying){
+    fruitX+=fruitVX;
+    fruitY+=fruitVY;
+  }
+}
+void keyPressed(){
+  flying=false;
+}
+```
+## ◇切水果勇士:
+```
+1.設定float變數 fruitX/Y控制它的位置，和加速度float fruitVX=1,fruitVY=-1;
+2.利用boolean控制現在使否往上：boolean flying=true;
+3.在draw 畫背景、圓形ellipse(fruitX,fruitY,50,50);和如果現在是flying移動位置。
+4.利用keyPressed，當按下時，停止，flying=false; 
+5.把fruitY改為300，從底部起飛。fruitVX 改 2,fruitVY 改 -13。
+  fruitVX會控制到球是往右還往左飛(負的往左，正的往右)
+6.設定一個fruitReset()，讓我們按下後會再飛新的水果出來。//keyPressed要放。
+  fruitX=random(100,300); ///讓X隨機100~300之間的位置生成。
+  fruitVX=random(-2,2);///讓它隨機切換往左or右飛。
+  fruitY和fruitVX依照原本的值。 flying改為True。
+```
+```c
+
+```
+## ◇:
 ```
 
 ```
 ```c
 
 ```
-## ◇ :
-```
 
-```
-```c
-
-```
 
 
 # 第十週
