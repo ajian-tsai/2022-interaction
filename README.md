@@ -870,7 +870,8 @@ void keyPressed(){
 4.利用keyPressed，當按下時，停止，flying=false; 
 5.把fruitY改為300，從底部起飛。fruitVX 改 2,fruitVY 改 -13。
   fruitVX會控制到球是往右還往左飛(負的往左，正的往右)
-6.設定一個fruitReset()，讓我們按下後會再飛新的水果出來。//keyPressed要放。
+6.在draw 的if(flying)裡放入 fruitVY+=0.98/3; ///重力往下
+7.設定一個fruitReset()，讓我們按下後會再飛新的水果出來。//keyPressed要放。
   fruitX=random(100,300); ///讓X隨機100~300之間的位置生成。
   fruitVX=random(-2,2);///讓它隨機切換往左or右飛。
   fruitY和fruitVX依照原本的值。 flying改為True。
@@ -878,14 +879,97 @@ void keyPressed(){
 ```c
 
 ```
-## ◇:
+## ◇利用class修改水果勇士：
 ```
-
+1.設定一個Class Fruit，設定好x,y,vx,vy,boolean變數。
+2.先呼叫PApplet sketch; 這個函式庫，在\class呼叫自己 Fruit(PApplet _sketch)再
+  (PApplet sketch;是為了後面要可以用random函式)，裡面要用random要寫成sketch.random( )。
+3.設定好reset和update的函式，主程式的地方改成用Fruit的Class。
 ```
 ```c
-
+class Fruit{
+   float x,y, vx, vy;
+   boolean flying;
+   PApplet sketch;///在class呼叫PApplet sketch的class為了Random可以使用
+   Fruit(PApplet _sketch){///呼叫自己，來產生另外一顆水果
+      sketch = _sketch;//設立sketch。
+      reset(); 
+   }
+   void reset(){///設定水果位置
+     x=sketch.random(100,300);
+     y=300;
+     vx=sketch.random(-2,2);
+     vy=-13;
+     flying=true;
+   }
+   void update(){///水果在飛的變化路徑
+     x+=vx;
+     y+=vy;
+     vy+=0.98/3;
+   }
+}
+Fruit fruit; //一個fruit是Fruit的東西
+void setup(){
+  size(400,300);
+  fruit = new Fruit(this);   
+}
+void draw(){
+  background(#FFF798);
+  ellipse(fruit.x,fruit.y,50,50);//畫圓,去拿class裡的x,y
+  fruit.update();//去拿class裡的update做變化
+}
+void keyPressed(){
+  fruit.reset(); //去拿class裡的reset做變化
+}
 ```
-
+## ◇ ** Class簡化頁面 **:
+```
+檔案的右邊有▼，點開選新增分頁，取名為Fruit，再把Class的程式碼整個貼過來。
+** 一次呼叫三個水果出來 和 字母對照**
+Class部分:
+    1. 新增一個String陣列 放入 所有英文字母。再建立一個char變數放水果上的字串。
+    2.利用c=line.charAt(i); 去對到陣列第 i 個字母。
+主程式部分:
+   1. 宣告fruit時，改為陣列 ：
+      Fruit [] fruits;
+      fruits = new Fruit[3];。//放setup
+   2.利用for迴圈去偵測那3個fruit (記得fruit都要改成fruits[i]，在setup,draw,keyPressed都要)
+   3. draw裡要多設定字體大小、字體顏色、字體置中、和印出字
+      textSize(30);//字體大小
+      textAlign(CENTER, CENTER);///置中
+      fill(0);//顏色
+      text(fruits[i].c, fruits[i].x, fruits[i].y);//印字
+   4.利用keyCode 去偵測鍵盤的字，查看是否跟fruits[i].c一樣，如果一樣就reset();
+```
+```c
+Fruit [] fruits; //變成陣列
+void setup() {
+  size(400, 300);
+  fruits = new Fruit[3];
+  for (int i=0; i<3; i++) {
+    fruits[i]=new Fruit(this);
+  }
+}
+void draw() {
+  background(#FFF798);
+  for (int i=0; i<3; i++) {
+    fill(255);
+    ellipse(fruits[i].x, fruits[i].y, 50, 50);
+    textSize(30);//字體大小
+    textAlign(CENTER, CENTER);///置中
+    fill(0);
+    text(fruits[i].c, fruits[i].x, fruits[i].y);//畫圓,去拿class裡的x,y
+    fruits[i].update();//去拿class裡的update做變化
+  }
+}
+void keyPressed() {
+    for (int i=0; i<3; i++) {
+      if ( keyCode == fruits[i].c) {  ///利用keyCode讀取鍵盤的字，去看是否一樣。
+        fruits[i].reset(); //去拿class裡的reset做變化
+      }
+    }
+}
+```
 
 
 # 第十週
